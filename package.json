@@ -1,6 +1,6 @@
 {
-  "name": "react-timer-connect",
-  "version": "0.1.0",
+  "name": "react-timer-connector",
+  "version": "0.1.1",
   "files": [
     "lib",
     "es"
@@ -15,9 +15,10 @@
     "xiangwenhu"
   ],
   "scripts": {
-    "build": "nwb build-react-component --title React Timer Connect"
+    "build": "nwb build-react-component --title React Timer Connector"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "license": "MIT",
   "dependencies": {
     "etimeout": "^1.0.6",

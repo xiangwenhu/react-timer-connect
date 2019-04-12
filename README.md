@@ -1,9 +1,9 @@
-react-timer-connect
+react-timer-connector
 =============
 暴露一个创建高阶组件的函数，该函数返回的组件会添加上timer属性。  
 最典型的的应用场景就是手机验证码。
 ```js
-import withTimer from "react-timer-connect"
+import withTimer from "react-timer-connector"
 const LoginTimerComponent = withTimer (LoginComponent, options)
 
 ```  
@@ -36,12 +36,12 @@ timer属性有如下属性：
 ## 安装
 
 ```
-npm install react-timer-connect
+npm install react-timer-connector
 ```
 
 ## 使用
 ```js
-import withTimer from "react-timer-connect"
+import withTimer from "react-timer-connector"
 import LoginComponent from "./LoginComponent"
 
 const LoginTimerComponent = withTimer (LoginComponent, options)
@@ -55,7 +55,7 @@ import React, { Component } from 'react';
 import './App.css';
 import TimingComponent from "./TimingComponent"
 
-import withTimer from "react-timer-connect"
+import withTimer from "react-timer-connector"
 
 const TimingCom = withTimer(TimingComponent)
 

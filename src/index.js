@@ -18,14 +18,6 @@ const withTimer = (Component, options = defaultOptions) => {
         value: options.start,
         isTiming: false
       };
-
-      this.judge = this.judge.bind(this);
-      this.nextPeriod = this.nextPeriod.bind(this);
-      this.start = this.start.bind(this);
-      this.reset = this.reset.bind(this);
-      this.cancel = this.cancel.bind(this);
-      this.continue = this.continue.bind(this);
-      
     }
 
     componentWillUnmount() {
@@ -33,15 +25,15 @@ const withTimer = (Component, options = defaultOptions) => {
       this.timer = null;
     }
 
-    judge(value) {
+    judge = value => {
       const options = this.options;
       return (
         (options.step <= 0 && options.end >= value) ||
         (options.step > 0 && options.end <= value)
       );
-    }
+    };
 
-    nextPeriod(next) {
+    nextPeriod = next => {
       const ended = this.judge(this.state.value);
       if (ended) {
         this.timer.cancel();
@@ -60,18 +52,18 @@ const withTimer = (Component, options = defaultOptions) => {
           next();
         }
       );
-    }
+    };
 
-    start(opt = {}) {
+    start = (opt = {}) => {
       this.options = Object.assign({}, defaultOptions, options, opt);
       const ended = this.judge(this.state.value);
       if (!ended) {
         this.setState({ isTiming: true });
         this.timer.start(this.nextPeriod);
       }
-    }
+    };
 
-    reset(autoStart) {
+    reset = autoStart => {
       this.timer.cancel();
       this.setState(
         {
@@ -84,16 +76,16 @@ const withTimer = (Component, options = defaultOptions) => {
           }
         }
       );
-    }
+    };
 
-    cancel() {
+    cancel = () => {
       this.setState({
         isTiming: false
       });
       this.timer.cancel();
-    }
+    };
 
-    continue() {
+    continue = () => {
       const ended = this.judge(this.state.value);
       if (ended) {
         return;
@@ -102,7 +94,7 @@ const withTimer = (Component, options = defaultOptions) => {
         isTiming: true
       });
       this.timer.continue();
-    }
+    };
 
     getTimer() {
       return {
