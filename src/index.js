@@ -13,7 +13,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
     constructor(props) {
       super(props);
       this.options = Object.assign({}, defaultOptions, initialOptions);
-      this.timer = timeout(options.interval, null);
+      this.timer = timeout(this.options.interval, null);
       this.state = {
         value: this.options.start,
         isTiming: false
@@ -33,15 +33,26 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
       );
     };
 
-    nextPeriod = next => {
+    end = () => {
+      this.timer.cancel();
+      this.setState({
+        isTiming: false
+      });
+    };
+
+    isEnded = () => {
       const ended = this.judge(this.state.value);
       if (ended) {
-        this.timer.cancel();
-        this.setState({
-          isTiming: false
-        });
+        this.end();
+      }
+      return ended;
+    };
+
+    nextPeriod = next => {
+      if (this.isEnded()) {
         return;
       }
+      const options = this.options;
       this.setState(
         preState => {
           return {
@@ -49,13 +60,16 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
           };
         },
         () => {
+          if (this.isEnded()) {
+            return;
+          }
           next();
         }
       );
     };
 
     start = (opt = {}) => {
-      this.options = Object.assign({}, defaultOptions, options, opt);
+      this.options = Object.assign({}, defaultOptions, initialOptions, opt);
       const ended = this.judge(this.state.value);
       if (!ended) {
         this.setState({ isTiming: true });
@@ -65,6 +79,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
 
     reset = autoStart => {
       this.timer.cancel();
+      const options = this.options;
       this.setState(
         {
           isTiming: false,
