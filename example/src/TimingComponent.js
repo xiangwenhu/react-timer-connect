@@ -13,7 +13,7 @@ export default class TimingComponent extends React.Component {
     return (
       <div>
         <p>计时：{value}</p>
-        <p>isTiming: {isTiming + ''}</p>
+        <p>isTiming: {isTiming + ""}</p>
         <input
           type="button"
           value="停止"
@@ -33,7 +33,7 @@ export default class TimingComponent extends React.Component {
           type="button"
           value="重置并继续"
           onClick={() => this.props.timer.reset(true)}
-        />
+        />     
       </div>
     );
   }

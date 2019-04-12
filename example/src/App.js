@@ -1,18 +1,25 @@
-import React, { Component } from 'react';
-import './App.css';
-import TimingComponent from "./TimingComponent"
+import React, { Component } from "react";
+import "./App.css";
+import TimingComponent from "./TimingComponent";
 
-import withTimer from "react-timer-connector"
+import withTimer from "./time";
 
-const TimingCom = withTimer(TimingComponent)
+const TimingCom = withTimer(TimingComponent, {
+  interval: 100,
+  start:30,
+  end:10
+});
 
 class App extends Component {
   render() {
     return (
-      <div className="App" style={{
-        marginTop: 120
-      }}>
-        <TimingCom/>
+      <div
+        className="App"
+        style={{
+          marginTop: 120
+        }}
+      >
+        <TimingCom />
       </div>
     );
   }

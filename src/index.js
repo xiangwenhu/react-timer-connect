@@ -8,14 +8,14 @@ const defaultOptions = {
   end: 0
 };
 
-const withTimer = (Component, options = defaultOptions) => {
+const withTimer = (Component, initialOptions = defaultOptions) => {
   return class TimerComponent extends React.Component {
     constructor(props) {
       super(props);
+      this.options = Object.assign({}, defaultOptions, initialOptions);
       this.timer = timeout(options.interval, null);
-      this.options = Object.assign({}, defaultOptions, options);
       this.state = {
-        value: options.start,
+        value: this.options.start,
         isTiming: false
       };
     }

@@ -8,24 +8,16 @@ const defaultOptions = {
   end: 0
 };
 
-const withTimer = (Component, options = defaultOptions) => {
+const withTimer = (Component, initialOptions = defaultOptions) => {
   return class TimerComponent extends React.Component {
     constructor(props) {
       super(props);
-      this.timer = timeout(options.interval, null);
-      this.options = Object.assign({}, defaultOptions, options);
+      this.options = Object.assign({}, defaultOptions, initialOptions);
+      this.timer = timeout(this.options.interval, null);
       this.state = {
-        value: options.start,
+        value: this.options.start,
         isTiming: false
       };
-
-      this.judge = this.judge.bind(this);
-      this.nextPeriod = this.nextPeriod.bind(this);
-      this.start = this.start.bind(this);
-      this.reset = this.reset.bind(this);
-      this.cancel = this.cancel.bind(this);
-      this.continue = this.continue.bind(this);
-      
     }
 
     componentWillUnmount() {
@@ -33,23 +25,34 @@ const withTimer = (Component, options = defaultOptions) => {
       this.timer = null;
     }
 
-    judge(value) {
+    judge = value => {
       const options = this.options;
       return (
         (options.step <= 0 && options.end >= value) ||
         (options.step > 0 && options.end <= value)
       );
-    }
+    };
 
-    nextPeriod(next) {
+    end = () => {
+      this.timer.cancel();
+      this.setState({
+        isTiming: false
+      });
+    };
+
+    isEnded = () => {
       const ended = this.judge(this.state.value);
       if (ended) {
-        this.timer.cancel();
-        this.setState({
-          isTiming: false
-        });
+        this.end();
+      }
+      return ended;
+    };
+
+    nextPeriod = next => {
+      if (this.isEnded()) {
         return;
       }
+      const options = this.options;
       this.setState(
         preState => {
           return {
@@ -57,22 +60,26 @@ const withTimer = (Component, options = defaultOptions) => {
           };
         },
         () => {
+          if (this.isEnded()) {
+            return;
+          }
           next();
         }
       );
-    }
+    };
 
-    start(opt = {}) {
-      this.options = Object.assign({}, defaultOptions, options, opt);
+    start = (opt = {}) => {
+      this.options = Object.assign({}, defaultOptions, initialOptions, opt);
       const ended = this.judge(this.state.value);
       if (!ended) {
         this.setState({ isTiming: true });
         this.timer.start(this.nextPeriod);
       }
-    }
+    };
 
-    reset(autoStart) {
+    reset = autoStart => {
       this.timer.cancel();
+      const options = this.options;
       this.setState(
         {
           isTiming: false,
@@ -84,16 +91,16 @@ const withTimer = (Component, options = defaultOptions) => {
           }
         }
       );
-    }
+    };
 
-    cancel() {
+    cancel = () => {
       this.setState({
         isTiming: false
       });
       this.timer.cancel();
-    }
+    };
 
-    continue() {
+    continue = () => {
       const ended = this.judge(this.state.value);
       if (ended) {
         return;
@@ -102,7 +109,7 @@ const withTimer = (Component, options = defaultOptions) => {
         isTiming: true
       });
       this.timer.continue();
-    }
+    };
 
     getTimer() {
       return {

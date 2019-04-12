@@ -1,5 +1,5 @@
 {
-  "name": "react-timer-connector",
+  "name": "react-time-hoc",
   "version": "0.1.1",
   "files": [
     "lib",
@@ -21,7 +21,9 @@
   "module": "es/index.js",
   "license": "MIT",
   "dependencies": {
-    "etimeout": "^1.0.6",
+    "etimeout": "^1.0.6"
+  },
+  "devDependencies":{
     "nwb": "^0.23.0"
   },
   "peerDependencies": {
