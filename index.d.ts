@@ -12,10 +12,10 @@ export interface ITimerProps {
 }
 
 export interface ITimerOptions {
-  interval: number;
-  start: number;
-  step: number;
-  end: number;
+  interval?: number;
+  start?: number;
+  step?: number;
+  end?: number;
 }
 
 export type Omit<T, K extends keyof T> = T extends any
