@@ -127,7 +127,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
 
         render() {
             const timer = this.getTimer();
-            return <Component timer={timer} {...this.pops} />;
+            return <Component timer={timer} {...this.props} />;
         }
     };
 };
