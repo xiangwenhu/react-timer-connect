@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import TimingComponent from "./TimingComponent";
 
-// import withTimer from "react-time-hoc";
-import withTimer from "./time";
+import withTimer from "react-time-hoc";
+// import withTimer from "./time";
 
 const TimingCom = withTimer(TimingComponent, {
     interval: 100,
