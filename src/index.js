@@ -16,8 +16,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
             this.timer = timeout(this.options.interval, null);
             this.state = {
                 value: this.options.start,
-                isTiming: false,
-                isEnded : false
+                isTiming: false
             };
         }
 
@@ -36,11 +35,10 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
             this.timer.cancel();
             this.setState(
                 {
-                    isTiming: false,
-                    isEnded = true,
+                    isTiming: false
                 },
                 () => {
-                    onTimingEnd && onTimingEnd(this.options, this.state.value);
+                    onTimingEnd && onTimingEnd();
                 }
             );
         };
@@ -77,7 +75,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
             this.options = Object.assign({}, defaultOptions, initialOptions, opt);
             const ended = this.judge(this.state.value);
             if (!ended) {
-                this.setState({ isTiming: true , isEnded: false});
+                this.setState({ isTiming: true });
                 this.timer.start(this.nextPeriod);
             }
         };
@@ -88,7 +86,6 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
             this.setState(
                 {
                     isTiming: false,
-                    isEnded: false,
                     value: options.start
                 },
                 () => {
@@ -120,9 +117,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
         getTimer() {
             return {
                 isTiming: this.state.isTiming,
-                isEnded: this.state.isEnded,
                 value: this.state.value,
-                
                 start: this.start,
                 cancel: this.cancel,
                 continue: this.continue,
