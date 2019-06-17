@@ -22,7 +22,7 @@ export type Omit<T, K extends keyof T> = T extends any
   ? Pick<T, Exclude<keyof T, K>>
   : never;
 
-export default function withRouter(
+export default function withTimer(
   component: React.ComponentType<any>,
   initialOptions?: ITimerOptions
 ): React.ComponentClass<Omit<any, keyof ITimerProps>>;
