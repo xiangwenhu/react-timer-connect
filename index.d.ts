@@ -7,8 +7,12 @@ export interface ITimerProps {
     start: () => void;
     cancel: () => void;
     continue: () => void;
-    reset: (autoStart: boolean) => void;
+    reset: (autoStart?: boolean) => void;
   };
+}
+
+export interface IOuterProps {
+  onTimingEnd?: (value: number) => void;
 }
 
 export interface ITimerOptions {
@@ -22,7 +26,10 @@ export type Omit<T, K extends keyof T> = T extends any
   ? Pick<T, Exclude<keyof T, K>>
   : never;
 
-export default function withTimer(
-  component: React.ComponentType<any>,
+export default function withTimer<P extends ITimerProps>(
+  component: React.ComponentType<P>,
   initialOptions?: ITimerOptions
-): React.ComponentClass<Omit<any, keyof ITimerProps>>;
+): React.ComponentClass<IOuterProps & Omit<P, keyof ITimerProps>>;
+
+
+

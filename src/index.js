@@ -38,7 +38,7 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
                     isTiming: false
                 },
                 () => {
-                    onTimingEnd && onTimingEnd();
+                    onTimingEnd && onTimingEnd(this.state.value);
                 }
             );
         };
