@@ -72,12 +72,20 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
         };
 
         start = (opt = {}) => {
-            this.options = Object.assign({}, defaultOptions, initialOptions, opt);
-            const ended = this.judge(this.state.value);
-            if (!ended) {
-                this.setState({ isTiming: true });
-                this.timer.start(this.nextPeriod);
+            if (this.state.isTiming) {
+                return;
             }
+            this.options = Object.assign({}, defaultOptions, initialOptions, opt);
+
+            this.setState(
+                {
+                    value: this.options.start
+                },
+                () => {
+                    this.setState({ isTiming: true });
+                    this.timer.start(this.nextPeriod);
+                }
+            );
         };
 
         reset = autoStart => {

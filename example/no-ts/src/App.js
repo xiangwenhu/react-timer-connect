@@ -6,8 +6,8 @@ import TimingComponent from "./TimingComponent";
 import withTimer from "./time";
 
 const TimingCom = withTimer(TimingComponent, {
-    interval: 100,
-    start: 30,
+    interval: 50,
+    start: 60,
     end: 0
 });
 
@@ -20,7 +20,7 @@ class App extends Component {
                     marginTop: 120
                 }}
             >
-                <TimingCom onTimingEnd={val => alert("ended:" + val)} />
+                <TimingCom />
             </div>
         );
     }
