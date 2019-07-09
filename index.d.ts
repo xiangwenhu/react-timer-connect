@@ -4,7 +4,7 @@ export interface ITimerProps {
   timer: {
     isTiming: boolean;
     value: number;
-    start: () => void;
+    start: (option: ITimerOptions, force: boolean) => void;
     cancel: () => void;
     continue: () => void;
     reset: (autoStart?: boolean) => void;
