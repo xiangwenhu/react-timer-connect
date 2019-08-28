@@ -75,8 +75,8 @@ const withTimer = (Component, initialOptions = defaultOptions) => {
             if (!force && this.state.isTiming) {
                 return;
             }
-            this.options = Object.assign({}, defaultOptions, initialOptions, opt);
-
+            this.timer.cancel();
+            this.options = Object.assign({}, defaultOptions, initialOptions, opt);            
             this.setState(
                 {
                     value: this.options.start
